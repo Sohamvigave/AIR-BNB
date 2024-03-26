@@ -25,7 +25,12 @@ router.get(
         let { id } = req.params;
         // populate reviews is used for accessing the full data of that id.
         const listing = await Listing.findById(id)
-            .populate("reviews")
+            .populate({
+                path: "reviews",
+                populate: {
+                    path: "author",
+                },
+            })
             .populate("owner");
         if (!listing) {
             req.flash("error", "Listing you request for does not exist");
