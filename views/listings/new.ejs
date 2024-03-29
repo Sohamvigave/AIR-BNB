@@ -8,7 +8,13 @@
     <!-- "nonvalidate" is bootstrap validation and it is valid for
     all browsers and it also invalidat the default browser setting-->
 
-    <form method="POST" action="/listings" novalidate class="needs-validation">
+    <form
+      method="POST"
+      action="/listings"
+      novalidate
+      class="needs-validation"
+      enctype="multipart/form-data"
+    >
       <!-- making object key by simple writing "listing[title]" -->
       <!-- object name = listing and key = title same for all  -->
 
@@ -35,13 +41,8 @@
       </div>
 
       <div class="mb-3">
-        <label for="image" class="form-label">image</label>
-        <input
-          name="listing[image]"
-          placeholder="enter image URL/LINK"
-          type="text"
-          class="form-control"
-        />
+        <label for="image" class="form-label">Upload Listing image</label>
+        <input name="listing[image]" type="file" class="form-control" />
       </div>
 
       <div class="row">
