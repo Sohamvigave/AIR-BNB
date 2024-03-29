@@ -13,12 +13,8 @@ const listingSchema = new Schema({
     description: String,
 
     image: {
-        type: String,
-        set: (v) =>
-            v === ""
-                //if the image is undefinde then use these default link (image-url)
-                ? "https://plus.unsplash.com/premium_photo-1670963964797-942df1804579?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGxvZGdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                : v,
+        url: String,
+        filename: String,
     },
 
     price: Number,
