@@ -10,6 +10,7 @@
         action="/listings/<%=listing._id%>?_method=PUT"
         novalidate
         class="needs-validation"
+        enctype="multipart/form-data"
       >
         <!-- making object key by simple writing "listing[title]" -->
         <!-- object name = listing and key = title same for all  -->
@@ -38,14 +39,8 @@
         </div>
 
         <div class="mb-3">
-          <label for="image" class="form-label">image</label>
-          <input
-            name="listing[image]"
-            value="<%=listing.image%>"
-            type="text"
-            class="form-control"
-            required
-          />
+          <label for="image" class="form-label">Upload New image</label>
+          <input name="listing[image]" type="file" class="form-control" />
           <div class="invalid-feedback">please enter a valid image link</div>
         </div>
 
