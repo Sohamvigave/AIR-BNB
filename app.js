@@ -14,8 +14,8 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/public")));
 
+// MONGO_URL = it is used for storing the info of session in "local database" (memory store)
 // const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-const dburl = process.env.ATLASDB_URL;
 
 const ExpressError = require("./utils/ExpressError.js");
 
@@ -29,7 +29,12 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
 const session = require("express-session");
+// const MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
+
+// dburl = it is used for storing the info in Atlas database 
+const dbUrl = process.env.ATLASDB_URL;
 
 main().then(() => {
     console.log("connected to DB");
@@ -38,7 +43,7 @@ main().then(() => {
 });
 
 async function main() {
-    await mongoose.connect(dburl);
+    await mongoose.connect(dbUrl);
 }
 
 app.set("view engine", "ejs");
@@ -46,8 +51,22 @@ app.set("views", path.join(__dirname, "views"));
 
 app.engine("ejs", ejsMate);
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: "mysupersecretcode",
+    },
+    touchAfter: 24 * 3600,
+});
+
+// if the error is found in mongo store
+store.on("error", () => {
+    console.log("ERROR IN MONGO SESSION STORE", err);
+});
+
 // Sessions options
 const sessionOptions = {
+    store,
     secret: "mysupersecretcode",
     resave: false,
     saveUninitialized: true,
