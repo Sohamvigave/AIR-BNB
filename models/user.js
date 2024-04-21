@@ -7,6 +7,17 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    geometry: {
+        type: {
+            type: String, // Don't do {location {type: Stringg}}
+            enum: ['Point'], // location.type must be point
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    }
 });
 
 userSchema.plugin(passportLocalMongoose);

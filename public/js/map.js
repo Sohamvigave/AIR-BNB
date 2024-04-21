@@ -16,3 +16,12 @@ const marker1 = new mapboxgl.Marker({ color: "red" })
         )
     )
     .addTo(map);
+
+const marker2 = new mapboxgl.Marker({ color: "black" })
+    .setLngLat(listing.owner.geometry.coordinates) // listing.geometry.coordinates
+    .setPopup(
+        new mapboxgl.Popup({ offset: 25 }).setHTML(
+            `<h4>${listing.title}</h4><p>Exact location will be provide after booking</p>`
+        )
+    )
+    .addTo(map);
